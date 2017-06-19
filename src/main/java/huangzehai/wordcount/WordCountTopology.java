@@ -23,14 +23,15 @@ public class WordCountTopology {
         ReportBolt reportBolt = new ReportBolt();
 
         TopologyBuilder topologyBuilder = new TopologyBuilder();
-        topologyBuilder.setSpout(SENTENCE_SPOUT_ID, spout);
-        topologyBuilder.setBolt(SPLIT_BOLT_ID, splitBolt).shuffleGrouping(SENTENCE_SPOUT_ID);
-        topologyBuilder.setBolt(COUNT_BOLD_ID, wordCountBolt).fieldsGrouping(SPLIT_BOLT_ID, new Fields("word"));
-        topologyBuilder.setBolt(REPORT_BOLT_ID,reportBolt).globalGrouping(COUNT_BOLD_ID);
+        topologyBuilder.setSpout(SENTENCE_SPOUT_ID, spout, 2);
+        topologyBuilder.setBolt(SPLIT_BOLT_ID, splitBolt, 2).setNumTasks(4).shuffleGrouping(SENTENCE_SPOUT_ID);
+        topologyBuilder.setBolt(COUNT_BOLD_ID, wordCountBolt, 4).fieldsGrouping(SPLIT_BOLT_ID, new Fields("word"));
+        topologyBuilder.setBolt(REPORT_BOLT_ID, reportBolt).globalGrouping(COUNT_BOLD_ID);
 
         Config config = new Config();
+        config.setNumWorkers(2);
         LocalCluster cluster = new LocalCluster();
-        cluster.submitTopology(TOPOLOGY_NAME,config,topologyBuilder.createTopology());
+        cluster.submitTopology(TOPOLOGY_NAME, config, topologyBuilder.createTopology());
         Utils.sleep(20000);
         cluster.killTopology(TOPOLOGY_NAME);
         cluster.shutdown();

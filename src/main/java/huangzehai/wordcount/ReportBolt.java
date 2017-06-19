@@ -23,6 +23,8 @@ public class ReportBolt extends BaseRichBolt {
     public void execute(Tuple tuple) {
         String word = tuple.getStringByField("word");
         Long count = tuple.getLongByField("count");
+        System.out.println("report: " + word + ":" + count);
+        //新的计数会覆盖旧的计数
         counts.put(word, count);
     }
 
