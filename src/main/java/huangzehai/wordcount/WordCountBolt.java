@@ -34,7 +34,8 @@ public class WordCountBolt extends BaseRichBolt {
         count++;
         counts.put(word, count);
         //将单词和最新的计数作为tuple向后发射，后面的ReportBolt仅使用最新的计数.
-        collector.emit(new Values(word, count));
+        collector.emit(tuple, new Values(word, count));
+        this.collector.ack(tuple);
     }
 
     @Override

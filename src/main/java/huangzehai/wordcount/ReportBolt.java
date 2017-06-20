@@ -13,10 +13,12 @@ import java.util.*;
  */
 public class ReportBolt extends BaseRichBolt {
     private HashMap<String, Long> counts = null;
+    private OutputCollector collector;
 
     @Override
     public void prepare(Map map, TopologyContext topologyContext, OutputCollector outputCollector) {
         counts = new HashMap<>();
+        this.collector = outputCollector;
     }
 
     @Override
@@ -26,11 +28,12 @@ public class ReportBolt extends BaseRichBolt {
         System.out.println("report: " + word + ":" + count);
         //新的计数会覆盖旧的计数
         counts.put(word, count);
+        collector.ack(tuple);
     }
 
     @Override
     public void declareOutputFields(OutputFieldsDeclarer outputFieldsDeclarer) {
-
+        // this bolt does not emit anything
     }
 
     @Override
