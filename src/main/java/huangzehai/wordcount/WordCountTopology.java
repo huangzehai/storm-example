@@ -2,6 +2,7 @@ package huangzehai.wordcount;
 
 import org.apache.storm.Config;
 import org.apache.storm.LocalCluster;
+import org.apache.storm.StormSubmitter;
 import org.apache.storm.topology.TopologyBuilder;
 import org.apache.storm.tuple.Fields;
 import org.apache.storm.utils.Utils;
@@ -30,10 +31,15 @@ public class WordCountTopology {
 
         Config config = new Config();
         config.setNumWorkers(2);
-        LocalCluster cluster = new LocalCluster();
-        cluster.submitTopology(TOPOLOGY_NAME, config, topologyBuilder.createTopology());
-        Utils.sleep(20000);
-        cluster.killTopology(TOPOLOGY_NAME);
-        cluster.shutdown();
+        if (args.length == 0) {
+            LocalCluster cluster = new LocalCluster();
+            cluster.submitTopology(TOPOLOGY_NAME, config, topologyBuilder.createTopology());
+            Utils.sleep(20000);
+            cluster.killTopology(TOPOLOGY_NAME);
+            cluster.shutdown();
+        } else {
+            StormSubmitter.submitTopology(args[0], config, topologyBuilder.createTopology());
+        }
+
     }
 }

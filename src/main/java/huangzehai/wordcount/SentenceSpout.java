@@ -38,6 +38,8 @@ public class SentenceSpout extends BaseRichSpout {
         this.collector.emit(values, msgId);
         index++;
         if (index >= sentences.length) {
+
+
             index = 0;
         }
         Utils.sleep(500);
