@@ -1,4 +1,4 @@
-package huangzehai.wordcount;
+package storm.wordcount;
 
 import org.apache.storm.task.OutputCollector;
 import org.apache.storm.task.TopologyContext;

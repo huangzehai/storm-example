@@ -1,4 +1,4 @@
-package huangzehai.wordcount;
+package storm.wordcount;
 
 import org.apache.storm.Config;
 import org.apache.storm.LocalCluster;
