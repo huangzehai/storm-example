@@ -18,7 +18,12 @@ import java.util.concurrent.ConcurrentHashMap;
 public class SentenceSpout extends BaseRichSpout {
     private ConcurrentHashMap<UUID, Values> pending;
     private SpoutOutputCollector collector;
-    private String[] sentences = {"My dog has fleas", "I like cold beverage", "the dog adt my homework", "don't have a cow man", "I don't think I like fleas"};
+    private String[] sentences = {
+            "My dog has fleas",
+            "I like cold beverage",
+            "the dog adt my homework",
+            "don't have a cow man",
+            "I don't think I like fleas"};
     private int index = 0;
 
     public void declareOutputFields(OutputFieldsDeclarer declarer) {
@@ -38,8 +43,6 @@ public class SentenceSpout extends BaseRichSpout {
         this.collector.emit(values, msgId);
         index++;
         if (index >= sentences.length) {
-
-
             index = 0;
         }
         Utils.sleep(500);
