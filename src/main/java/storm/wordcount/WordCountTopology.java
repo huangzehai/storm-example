@@ -26,7 +26,7 @@ public class WordCountTopology {
         SplitSentenceBolt splitBolt = new SplitSentenceBolt();
         WordCountBolt wordCountBolt = new WordCountBolt();
         ReportBolt reportBolt = new ReportBolt();
-        BaseWindowedBolt slidingWindowBolt = new SlidingWindowBolt().withWindow(new BaseWindowedBolt.Duration(3, TimeUnit.SECONDS), new BaseWindowedBolt.Duration(3, TimeUnit.SECONDS));
+        BaseWindowedBolt slidingWindowBolt = new SlidingWindowBolt().withWindow(new BaseWindowedBolt.Duration(6, TimeUnit.SECONDS), new BaseWindowedBolt.Duration(3, TimeUnit.SECONDS));
 
         TopologyBuilder topologyBuilder = new TopologyBuilder();
         topologyBuilder.setSpout(SENTENCE_SPOUT_ID, spout, 2);

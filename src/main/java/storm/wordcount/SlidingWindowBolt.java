@@ -14,6 +14,7 @@ public class SlidingWindowBolt extends BaseWindowedBolt {
 
     private OutputCollector collector;
     private Map<String, Long> counts;
+    private int times = 0;
 
     @Override
     public void prepare(Map map, TopologyContext topologyContext, OutputCollector outputCollector) {
@@ -23,7 +24,8 @@ public class SlidingWindowBolt extends BaseWindowedBolt {
 
     @Override
     public void execute(TupleWindow tupleWindow) {
-        System.out.println("+----------one window data----------+");
+        times++;
+        System.out.println("+----------one window data: " + times);
         counts.clear();
         for (Tuple tuple : tupleWindow.get()) {
             String word = tuple.getStringByField("word");
