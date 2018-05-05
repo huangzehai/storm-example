@@ -26,6 +26,7 @@ public class SplitSentenceBolt extends BaseRichBolt {
         String sentence = tuple.getStringByField("sentence");
         String[] words = sentence.split(" ");
         for (String word : words) {
+            //将输入的tuple和输出的tuple锚定
             collector.emit(tuple, new Values(word.toLowerCase().trim()));
         }
         this.collector.ack(tuple);

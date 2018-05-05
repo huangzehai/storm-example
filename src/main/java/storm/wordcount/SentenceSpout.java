@@ -54,6 +54,7 @@ public class SentenceSpout extends BaseRichSpout {
     }
 
     public void fail(Object msgId) {
+        //重发失败的消息
         this.collector.emit(this.pending.get(msgId), msgId);
     }
 
